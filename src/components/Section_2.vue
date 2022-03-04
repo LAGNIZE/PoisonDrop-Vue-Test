@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="wrapper">
     Step 2
-    <label>Graduation</label>
-    <select v-model="form.graduation">
-      <option v-for="id in graduations">{{ id }}</option>
+    <div>
+      <label>Choose your educational level:</label>
+    <select v-model="getEducation">
+      <option v-for="(list, idx) in getEdLevel" v-bind:key="idx">{{ list }}</option>
     </select>
-    <label>Frameworks</label>
+    </div>
+    <div>
     <multiselect
-      v-model="form.frameworks"
-      :options="options"
+      v-model="getFrameworks"
+      :options="getFrameOptions"
       :multiple="true"
       :close-on-select="false"
       :clear-on-select="false"
@@ -17,12 +19,13 @@
       :preselect-first="false"
     >
     </multiselect>
+    </div>    
     <div>
-      <label>SMS оповещение</label>
+      <label>SMS оповещение:</label>
       <label for="yes">Yes</label>
-      <input type="radio" value="yes" id="yes" v-model="form.sms" name="sms" />
+      <input type="radio" value="yes" id="yes" v-model="getSMS" name="sms" />
       <label for="no">No</label>
-      <input type="radio" value="no" id="yes" v-model="form.sms" name="sms" />
+      <input type="radio" value="no" id="yes" v-model="getSMS" name="sms" />
     </div>
   </div>
 </template>
@@ -35,24 +38,46 @@ export default {
     Multiselect
   },
   name: "Section_2",
-  data() {
-    return {
-      form: {
-        graduation: "",
-        frameworks: "",
-        sms: null
+  computed: {
+    getEdLevel: {
+      get() {
+        return this.$store.state.edLevel;
+      }
+    },
+    getFrameOptions: {
+      get() {
+        return this.$store.state.frameOptions;
+      }
+    },
+    getEducation: {
+      get() {
+        return this.$store.state.form.education;
       },
-      graduations: [
-        "Среднее",
-        "Средне-специальное",
-        "Неоконченное высшее",
-        "Бакалавр",
-        "Магистрант",
-        "Аспирант"
-      ],
-      options: ["Vue.js", "React", "Angular", "Svelte", "Ember,js"]
-    };
+      set(getEducation) {
+        this.$store.commit("updateEducation", getEducation);
+      }
+    },
+    getFrameworks: {
+      get() {
+        return this.$store.state.form.frameworks;
+      },
+      set(getFrameworks) {
+        this.$store.commit("updateFrameworks", getFrameworks);
+      }
+    },
+    getSMS: {
+      get() {
+        return this.$store.state.form.sms;
+      },
+      set(getSMS) {
+        this.$store.commit("updateSMS", getSMS);
+      }
+    }
   }
 };
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
+  .wrapper div {
+    margin-top: 10px;
+  }
+</style>

@@ -1,25 +1,34 @@
 <template>
-  <div>
+  <div class="wrapper">
     Step 1
-    <input type="text" v-model="form.name" placeholder="What is your name?" />
-    <input type="email" v-model="form.email" placeholder="Type your email?" />
-    <input
-      type="tel"
-      v-model="form.phone"
-      placeholder="What is your phone number?"
-    />
-    <input
-      type="text"
-      v-model="form.birth"
-      placeholder="Type your date of birth?"
-    />
     <div>
+      <input type="text" v-model="getName" placeholder="What is your name?" />
+    </div>
+    <div>
+      <input type="email" v-model="getEmail" placeholder="Type your email" />
+    </div>
+    <div>
+      <input
+        type="tel"
+        v-model="getPhone"
+        placeholder="Type your phone number"
+      />
+    </div>
+    <div>
+      <input
+        type="text"
+        v-model="getBirth"
+        placeholder="Type your date of birth"
+      />
+    </div>
+    <div>
+      <label>Select your gender:</label>
       <label for="men">Men</label>
       <input
         type="radio"
         value="men"
         id="men"
-        v-model="form.gender"
+        v-model="getGender"
         name="gender"
       />
       <label for="women">Women</label>
@@ -27,7 +36,7 @@
         type="radio"
         value="women"
         id="women"
-        v-model="form.gender"
+        v-model="getGender"
         name="gender"
       />
     </div>
@@ -37,16 +46,52 @@
 <script>
 export default {
   name: "Section_1",
-  data() {
-    return {
-      form: {
-        name: null,
-        email: null,
-        phone: null,
-        birth: null,
-        gender: null
+  computed: {
+    getName: {
+      get() {
+        return this.$store.state.form.name;
+      },
+      set(getName) {
+        this.$store.commit("updateName", getName);
       }
-    };
+    },
+    getEmail: {
+      get() {
+        return this.$store.state.form.email;
+      },
+      set(getEmail) {
+        this.$store.commit("updateEmail", getEmail);
+      }
+    },
+    getPhone: {
+      get() {
+        return this.$store.state.form.phone;
+      },
+      set(getPhone) {
+        this.$store.commit("updatePhone", getPhone);
+      }
+    },
+    getBirth: {
+      get() {
+        return this.$store.state.form.birth;
+      },
+      set(getBirth) {
+        this.$store.commit("updateBirth", getBirth);
+      }
+    },
+    getGender: {
+      get() {
+        return this.$store.state.form.gender;
+      },
+      set(getGender) {
+        this.$store.commit("updateGender", getGender);
+      }
+    }
   }
 };
 </script>
+<style>
+.wrapper div {
+  margin-top: 10px;
+}
+</style>

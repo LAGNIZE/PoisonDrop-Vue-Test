@@ -1,49 +1,56 @@
 <template>
-  <div>
+  <div class="wrapper">
     Step 4
-    <input
-      type="text"
-      v-model="form.login"
-      placeholder="What is your GitHub login?"
-    />
-    <button v-on:click="findUser">Find</button>
-    <div v-model="totalInfo">
-      {{ totalInfo.login }}
-      {{ totalInfo.id }}
-      {{ totalInfo.url }}
-      {{ totalInfo.name }}
-      {{ totalInfo.location }}
-      {{ totalInfo.public_repos }}
-      {{ totalInfo.followers }}
-      {{ totalInfo.following }}
+    <div class="login">
+      <input
+        type="text"
+        v-model="getLogin"
+        placeholder="What is your GitHub login?"
+      />
+      <button>Find</button>
     </div>
-    <button v-on:click="sendData">Send Data</button>
+    <div class="info">
+      <div>Login:</div>
+      <div>ID:</div>
+      <div>URL:</div>
+      <div>Name:</div>
+      <div>Location:</div>
+      <div>Public repos:</div>
+      <div>Followers:</div>
+      <div>Following:</div>
+    </div>
+    <button class="sendData">Send Data</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "Section_4",
-  data() {
-    return {
-      totalInfo: "",
-      form: {
-        login: null
+  computed: {
+    getLogin: {
+      get() {
+        return this.$store.state.form.login;
+      },
+      set(getLogin) {
+        this.$store.commit("updateLogin", getLogin);
       }
-    };
-  },
-  methods: {
-    async findUser() {
-      const response = await fetch(
-        "https://api.github.com/users/" + this.form.login
-      );
-      const data = await response.json();
-      this.totalInfo = data;
-      console.log(this.totalInfo.name);
-    },
-    sendData: function() {
-      console.log(this.totalInfo.name);
     }
   }
 };
 </script>
+<style>
+.sendData {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+}
+
+.login {
+  margin-top: 10px;
+}
+
+.info div {
+  width: fit-content;
+  margin: 0 auto 2px auto;
+}
+</style>
