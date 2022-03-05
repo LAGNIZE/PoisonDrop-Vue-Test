@@ -19,7 +19,7 @@ export default new Vuex.Store({
       frameworks: null,
       sms: null,
       workExp: [""],
-      login: null
+      login: ""
     },
     edLevel: [
       "Среднее",
@@ -31,8 +31,7 @@ export default new Vuex.Store({
     ],
     frameOptions: [
       "Vue.js", "React", "Angular", "Svelte", "Ember,js"
-    ],
-    totalInfo: ""
+    ]
   },
   getters: {
     getSteps(state) {
@@ -111,19 +110,7 @@ export default new Vuex.Store({
     },
     updateLogin(state, value) {
       state.form.login = value;
-    },
-    updateTotalInfo(state, data) {
-      state.totalInfo = data
     }
   },
-  actions: {
-      async fetchData(ctx) {
-          const response = await fetch(
-            "https://api.github.com/users/" + this.form.login
-          );
-          const data = await response.json();
-          ctx.commit('updateTotalInfo', data)
-          console.log('HEY')
-    }
-  }
+  actions: {}
 });

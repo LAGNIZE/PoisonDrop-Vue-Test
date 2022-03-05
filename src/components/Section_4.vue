@@ -10,7 +10,7 @@
       <button>Find</button>
     </div>
     <div class="info">
-      <div>Login:</div>
+      <div>Login: {{ posts.name }} </div>
       <div>ID:</div>
       <div>URL:</div>
       <div>Name:</div>
@@ -25,7 +25,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      posts: [],
+      login: "LAGNIZE"
+    }
+  },
   name: "Section_4",
+  async mounted () {
+    const res = await fetch('https://api.github.com/users/' + this.login)
+    const posts = await res.json()
+    this.posts = posts
+  },
   computed: {
     getLogin: {
       get() {
