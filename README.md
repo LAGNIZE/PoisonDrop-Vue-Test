@@ -1,10 +1,10 @@
 # poison-drop
 
-> A Vue.js project
+> A PoisonDrop Junior Frontend Developer project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
