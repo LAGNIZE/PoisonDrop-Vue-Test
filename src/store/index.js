@@ -10,12 +10,13 @@ export default new Vuex.Store({
       totalSteps: 4
     },
     form: {
-      name: null,
-      email: null,
-      phone: null,
-      birth: null,
-      gender: null,
-      education: null,
+      surname: "",
+      name: "",
+      email: "",
+      phone: "",
+      birth: "",
+      gender: "",
+      education: "",
       frameworks: null,
       sms: null,
       workExp: [""],
@@ -31,11 +32,16 @@ export default new Vuex.Store({
     ],
     frameOptions: [
       "Vue.js", "React", "Angular", "Svelte", "Ember,js"
-    ]
+    ],
+    gitInfo: [],
+    submitStatus: null
   },
   getters: {
     getSteps(state) {
       return state.steps;
+    },
+    getSurname(state) {
+      return state.form.surname;
     },
     getName(state) {
       return state.form.name;
@@ -72,7 +78,13 @@ export default new Vuex.Store({
     },
     getFrameOptions(state) {
       return state.frameOptions;
-    }
+    },
+    getGitInfo(state) {
+      return state.gitInfo;
+    },
+    getSubmitStatus(state) {
+      return state.submitStatus;
+    },
   },
   mutations: {
     increment(state) {
@@ -80,6 +92,9 @@ export default new Vuex.Store({
     },
     decrement(state) {
       state.steps.step--;
+    },
+    updateSurname(state, value) {
+      state.form.surname = value;
     },
     updateName(state, value) {
       state.form.name = value;
@@ -106,11 +121,23 @@ export default new Vuex.Store({
       state.form.sms = value;
     },
     updateWorkExp(state, value) {
-      state.form.workExp[value.index].push(value);
+      state.form.workExp.push(value);
     },
     updateLogin(state, value) {
       state.form.login = value;
-    }
+    },
+    updategitInfo(state, posts) {
+      state.gitInfo = posts;
+    },
+    updateSubmitStatus(state, value) {
+      state.submitStatus = value;
+    },
   },
-  actions: {}
+  actions: {
+    async fetchGitInfo(ctx) {
+      const res = await fetch('https://api.github.com/users/' + ctx.getters.getLogin)
+      const posts = await res.json()
+      ctx.commit('updategitInfo', posts)
+    }
+  }
 });
